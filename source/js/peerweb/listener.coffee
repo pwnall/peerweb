@@ -61,9 +61,11 @@ class PeerWeb.Listener
   _onSdpOffer: (connection, offer) ->
     sdp = new PeerWeb.Sdp offer.sdp
     console.log ['sdpoffer', sdp]
+    console.log offer.sdp
 
     sdp.setIceCredentials @config.seedChannelListenIceUser,
                           @config.seedChannelListenIcePassword
+    #sdp.replaceMediaTransport 'DTLS/SCTP', 'SDES/SCTP'
     sdp.setCrypto @config.seedChannelCrypto
     sdp.setFingerprint @config.seedChannelListenHash
     sdp.removeMediaStreams()
@@ -81,8 +83,10 @@ class PeerWeb.Listener
     sdp.origin.version += 1
     sdp.setIceCredentials @config.seedChannelPushIceUser,
                           @config.seedChannelPushIcePassword
+    sdp.replaceMediaTransport 'DTLS/SCTP', 'SCTP'
     sdp.setCrypto @config.seedChannelCrypto
-    sdp.setFingerprint @config.seedChannelPushHash
+    #sdp.setFingerprint @config.seedChannelPushHash
+    sdp.setFingerprint null
     sdp.removeMediaStreams()
     sdp.setIceSetup 'passive'
     console.log sdp.toSdpString()

@@ -211,20 +211,41 @@ class PeerWeb.Sdp
 
   # Overrides the crypto attribute for each stream in this description.
   #
-  # @param {String} crypto the new value of the crypto attribute
+  # @param {String} crypto the new value of the crypto attribute; if null, the
+  #   crypto attribute is removed from each stream
   # @return {PeerWeb.Sdp} this, for easy call chaining
   setCrypto: (crypto) ->
     for media in @media
-      media.attributes['crypto'] = crypto
+      if crypto is null
+        delete media.attributes['crypto']
+      else
+        media.attributes['crypto'] = crypto
     @
 
   # Overrides the fingerprint attribute for each stream in this description.
   #
-  # @param {String} fingerprint the new value of the fingerprint attribute
+  # @param {String} fingerprint the new value of the fingerprint attribute; if
+  #   null, the fingerprint attribute is removed from each stream
   # @return {PeerWeb.Sdp} this, for easy call chaining
   setFingerprint: (fingerprint) ->
     for media in @media
-      media.attributes['fingerprint'] = fingerprint
+      if fingerprint is null
+        delete media.attributes['fingerprint']
+      else
+        media.attributes['fingerprint'] = fingerprint
+    @
+
+  # Replaces a media transport for each stream in this description.
+  #
+  # @param {String} oldTransport streams whose media transport match this value
+  #   will have the transport replaced
+  # @param {String} newTransport streams whose media transport matches the
+  #   replacement criterion will have their transport set to this value
+  # @return {PeerWeb.Sdp} this, for easy call chaining
+  replaceMediaTransport: (oldTransport, newTransport) ->
+    for media in @media
+      if media.transport is oldTransport
+        media.transport = newTransport
     @
 
   # Removes the non-data streams in this description.
@@ -232,7 +253,8 @@ class PeerWeb.Sdp
   # @return {PeerWeb.Sdp} this, for easy call chaining
   removeMediaStreams: ->
     if @attributes['group']
-      @attributes['group'] = 'BUNDLE data'
+      #@attributes['group'] = 'BUNDLE data'
+      delete @attributes['group']
     @media = (media for media in @media when media.media is 'application')
     @
 

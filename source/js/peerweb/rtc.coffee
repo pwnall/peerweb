@@ -11,12 +11,13 @@ class PeerWeb.Rtc
   rtcPeerConnection: ->
     constructor = @rtcPeerConnectionClass()
     mandatoryConstraints = [
+      { RtpDataChannels: true },
+      { DtlsSrtpKeyAgreement: false },
       { OfferToReceiveVideo: false },
       { OfferToReceiveAudio: false },
       { RequestIdentity: 'no' },
     ]
     optionalConstraints = [
-      # { RtpDataChannels: true },
       { IceRestart: false },
     ]
     new constructor { iceServers: @config.iceServers },

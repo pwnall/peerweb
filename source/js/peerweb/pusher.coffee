@@ -69,8 +69,10 @@ class PeerWeb.Pusher
 
     sdp.setIceCredentials @config.seedChannelListenIceUser,
                           @config.seedChannelListenIcePassword
+    sdp.replaceMediaTransport 'DTLS/SCTP', 'SCTP'
     sdp.setCrypto @config.seedChannelCrypto
-    sdp.setFingerprint @config.seedChannelListenHash
+    sdp.setFingerprint null
+    #sdp.setFingerprint @config.seedChannelListenHash
     sdp.removeMediaStreams()
 
     transport = if @targetPort is '0' then 'tcp' else 'udp'
@@ -91,8 +93,9 @@ class PeerWeb.Pusher
     sdp = new PeerWeb.Sdp answer.sdp
     sdp.setIceCredentials @config.seedChannelPushIceUser,
                           @config.seedChannelPushIcePassword
+    sdp.replaceMediaTransport 'DTLS/SCTP', 'SCTP'
     sdp.setCrypto @config.seedChannelCrypto
-    #sdp.setFingerprint @config.seedChannelPushHash
+    sdp.setFingerprint @config.seedChannelPushHash
     sdp.removeMediaStreams()
     sdp.setIceSetup 'passive'
     console.log sdp.toSdpString()

@@ -12,9 +12,9 @@ class PeerWeb.Config
     @seedChannelCrypto =
         '0 AES_CM_128_HMAC_SHA1_80 inline:o1WntMPfTDqKE2ppWMzVtmdTRnklFNH4LtCC9Bw0'
     @seedChannelListenHash =
-        'sha-256 7E:77:AB:88:F4:DA:54:6F:B0:49:50:72:CE:FC:0F:33:08:D4:9D:AE:AB:FB:17:EB:A0:87:58:B2:87:F0:56:17'
+        'sha-256 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00'
     @seedChannelPushHash =
-        'sha-256 DF:42:88:1D:22:EE:C5:D3:EE:BB:D5:93:80:45:1F:9E:F1:9B:89:F4:24:B1:17:EF:92:28:B1:DA:76:22:CE:9C'
+        'sha-256 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00'
 
   # @property {Array<RTCIceServer>} list of TURN and STUN servers
   iceServers: null
